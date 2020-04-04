@@ -25,7 +25,18 @@
                         <td><img src="storage/{{$post->image}}" width="50px" height="50px" alt=""></td>
                         <td>{{$post->title}}</td>
                         <td><button class="btn btn-info btn-sm">Edit</button></td>
-                        <td><button class="btn btn-danger btn-sm">Trash</button></td>
+
+                        <td>
+                            <form action="{{route('posts.destroy', $post->id)}}" method="POST">
+                               
+                                @csrf
+                                @method('DELETE')
+
+                                <button class="btn btn-danger btn-sm" type="submit">Trash</button>
+
+                            </form>
+                        </td>
+                        
                         <td></td>
                     </tr>
                 @endforeach
