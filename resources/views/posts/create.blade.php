@@ -11,6 +11,7 @@
     <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
 
+        @if($errors->any())
         <div class="alert alert-danger">
             <ul class="list-group">
                 @foreach ($errors->all() as $error)
@@ -20,6 +21,7 @@
                 @endforeach
             </ul>
         </div>
+        @endif
 
         <div class="form-group">
             <label for="title">Title</label>
