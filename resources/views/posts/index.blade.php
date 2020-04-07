@@ -28,7 +28,7 @@
                             <td>{{$post->title}}</td>
 
                             @if (!$post->trashed())
-                                <td><button class="btn btn-info btn-sm">Edit</button></td>
+                                <td><a href="{{ route('posts.edit', $post->id)}}" class="btn btn-info btn-sm">Edit</a></td>
                             @endif
 
                             <td>
@@ -38,7 +38,7 @@
                                     @method('DELETE')
 
                                     <button class="btn btn-danger btn-sm" type="submit">
-                                        {{ $post->trashed() ? "Delete" : "Trash"}}
+                                        {{ $post->trashed() ? "Delete" : "Trash Post"}}
                                     </button>
 
                                 </form>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 // suse Illuminate\Http\Request;
 use App\Http\Requests\Posts\CreatePostsRequest;
+use App\Http\Requests\Posts\UpdatePostsRequest;
 use App\Post;
 use Illuminate\Support\Facades\Storage;
 
@@ -38,7 +39,7 @@ class PostsController extends Controller
      */
     public function store(CreatePostsRequest $request)
     {
-        // dd($request);
+        //  dd($request->request);
         $image = $request->image->store('posts');
 
         Post::create([
@@ -46,7 +47,7 @@ class PostsController extends Controller
             "description" => $request->description,
             "image" => $image,
             "content" => $request->content,
-            "published_at" => $request->publisched,
+            "published_at" => $request->published_at,
         ]);
         session()->flash('success', 'Post created successfuly');
         
@@ -71,9 +72,9 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view('posts/create')->with('post', $post);
     }
 
     /**
@@ -83,10 +84,22 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    // public function update(Request $request, $id)
-    // {
-    //     //
-    // }
+    public function update(UpdatePostsRequest $request, Post $post)
+    {
+        // dd($request->image);
+        $data = $request->only(['title', 'description', 'published_at', 'content']);
+
+        if($request->hasFile('image')) {
+            $image = $request->image->store('posts');
+            Storage::delete($post->image);
+            $data['image'] = $image;
+        }
+        $post->update($data);
+
+        session()->flash('success', 'Post updated Successfully');
+
+        return redirect(route('posts.index'));
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -111,8 +124,6 @@ class PostsController extends Controller
     }
 
     public function trash() {
-
-        
 
         $trashed = Post::onlyTrashed()->get();
 
