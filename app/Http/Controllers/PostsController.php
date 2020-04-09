@@ -6,10 +6,14 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Posts\CreatePostsRequest;
 use App\Http\Requests\Posts\UpdatePostsRequest;
 use App\Post;
+use App\Category;
 
 
 class PostsController extends Controller
 {
+    public function __construct() {
+        $this->middleware('verifyCategoryCount')->only(['store', 'create']);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +31,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        return view('posts/create');
+        return view('posts/create')->with('categories', Category::all());
     }
 
     /**
@@ -40,6 +44,7 @@ class PostsController extends Controller
     {
         //  dd($request->request);
         $image = $request->image->store('posts');
+        
 
         Post::create([
             "title" => $request->title,
@@ -47,6 +52,7 @@ class PostsController extends Controller
             "image" => $image,
             "content" => $request->content,
             "published_at" => $request->published_at,
+            "category_id" => $request->category,
         ]);
         session()->flash('success', 'Post created successfuly');
         
@@ -73,7 +79,7 @@ class PostsController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts/create')->with('post', $post);
+        return view('posts/create')->with('post', $post)->with('categories', Category::all());
     }
 
     /**
@@ -85,8 +91,10 @@ class PostsController extends Controller
      */
     public function update(UpdatePostsRequest $request, Post $post)
     {
-        // dd($request->image);
-        $data = $request->only(['title', 'description', 'published_at', 'content']);
+        // dd($request->category);
+        $categgory_id = Category::all()->where('id', $request->category);
+        // dd($request->categgory_id);
+        $data = $request->only(['title', 'description', 'published_at', 'content', 'category']);
 
         if($request->hasFile('image')) {
             $image = $request->image->store('posts');
