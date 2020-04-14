@@ -67,7 +67,7 @@
         @if ($tags->count() > 0)
             <div class="form-group">
                 <label for="tags">Tags</label>
-                <select name="tags[]" id="tags" class="form-control" multiple>
+                <select name="tags[]" id="tags" class="form-control tags-select" multiple>
 
                     @foreach ($tags as $tag)
                         <option value="{{$tag->id}}"
@@ -99,10 +99,15 @@
 @section('scripts')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/trix/1.2.1/trix-core.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.3/flatpickr.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 
     <script>
         flatpickr("#published_at", {
             enableTime : true,
+        });
+
+        $(document).ready(function() {
+            $('.tags-select').select2();
         });
     </script>
     
