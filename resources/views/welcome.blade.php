@@ -27,7 +27,7 @@
   <main class="main-content">
   <div class="section bg-gray">
     <div class="container">
-      <div class="row">
+      <div class="row d-flex justify-content-center">
 
 
         <div class="col-md-8 col-xl-9">
@@ -51,11 +51,11 @@
 
           </div>
 
-
-          <nav class="flexbox mt-30">
-            <a class="btn btn-white disabled"><i class="ti-arrow-left fs-9 mr-4"></i> Newer</a>
-            <a class="btn btn-white" href="#">Older <i class="ti-arrow-right fs-9 ml-4"></i></a>
-          </nav>
+          <div class="d-flex">
+            <div class="mx-auto">
+              {{ $posts->links() }}
+            </div>
+          </div>
         </div>
 
 
