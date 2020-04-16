@@ -40,7 +40,8 @@
          
         </section>
 
-        <a class="btn btn-xs btn-round btn-success" href="{{route('login')}}">Login</a>
+        <a class="btn btn-xs btn-round btn-success mr-5" href="{{route('login')}}">Login</a>
+        <a class="btn btn-xs btn-round btn-info" href="{{route('register')}}">Register</a>
 
       </div>
     </nav><!-- /.navbar -->

@@ -13,9 +13,9 @@ class WelcomeController extends Controller
 
         $search = request()->query('search');
         if($search) {
-           $posts=Post::where('title','LIKE',"%{$search}%")->paginate(1);
+           $posts=Post::where('title','LIKE',"%{$search}%")->paginate(2);
         } else {
-            $posts = Post::paginate(1);
+            $posts = Post::paginate(4);
         }
         
         return view('welcome')
