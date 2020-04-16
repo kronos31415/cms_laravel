@@ -5,6 +5,8 @@ use Illuminate\Database\Seeder;
 use App\Category;
 use App\Post;
 use App\Tag;
+use App\User;
+use Illuminate\Support\Facades\Hash;
 
 class PostTableSeeder extends Seeder
 {
@@ -35,12 +37,25 @@ class PostTableSeeder extends Seeder
             'name' => 'Offers',
         ]);
 
+        $author1 = User::create([
+            'name' => 'Pawcio Zarzycki',
+            'email' =>'pawelek@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        $author2 = User::create([
+            'name' => 'Czarek Zarzycki',
+            'email' =>'czarek90@gmail.com',
+            'password' => Hash::make('password'),
+        ]);
+
         $post1 = Post::create([
             'title' => 'Relocated office to new Garage:)',
             'description' => 'Post number 1',
             'content' => 'Content number 2',
             'category_id' => $category1->id,
-            'image' => 'posts/1.jpg'
+            'image' => 'posts/1.jpg',
+            'user_id' => $author1->id
         ]);
 
         $post2 = Post::create([
@@ -48,7 +63,8 @@ class PostTableSeeder extends Seeder
             'description' => 'Post number 2',
             'content' => 'Content number 3',
             'category_id' => $category2->id,
-            'image' => 'posts/2.jpg'
+            'image' => 'posts/2.jpg',
+            'user_id' => $author2->id
         ]);
 
         $post3 = Post::create([
@@ -56,7 +72,8 @@ class PostTableSeeder extends Seeder
             'description' => 'Post number 3',
             'content' => 'Content number 3',
             'category_id' => $category3->id,
-            'image' => 'posts/3.jpg'
+            'image' => 'posts/3.jpg',
+            'user_id' => $author2->id
         ]);
 
         $post4 = Post::create([
@@ -64,7 +81,8 @@ class PostTableSeeder extends Seeder
             'description' => 'Post number 4',
             'content' => 'Content number 4',
             'category_id' => $category4->id,
-            'image' => 'posts/4.jpg'
+            'image' => 'posts/4.jpg',
+            'user_id' => $author2->id
         ]);
 
         $tag1 = Tag::create([
